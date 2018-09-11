@@ -1,0 +1,61 @@
+<h2>All cards</h2>
+<small>Card database: Patch 4.35 </small><br>
+
+<?php
+$link->set_charset("utf8");
+$query = "SELECT tt_cards.name as cardname, tt_attribute.name as cardtype,rarity,p1,p2,p3,p4,patch
+FROM tt_cards LEFT OUTER JOIN tt_attribute ON tt_cards.type=tt_attribute.id
+ORDER BY tt_cards.name;";
+require("intern/dbconnect/get_query.php");
+
+echo '<table border="1">';
+echo"<div class='row bold'>
+				
+				<div class='col-sm-7'>Name</div>
+				<div class='col-xs-3 col-sm-1'>Rarity</div>
+				<div class='col-xs-3 col-sm-1'>Type</div>
+				<div class='col-xs-3 col-sm-2'>Power</div>
+				<div class='col-xs-3 col-sm-1'>Patch</div>
+				
+			</div>";
+
+		$num = mysqli_num_rows($result);
+        for ($i = 0; $i < $num; $i++)
+            {
+         	$row = mysqli_fetch_array($result);
+
+			$rarity = $row[rarity];
+				if ($rarity == 1) $rarity = "★";
+				if ($rarity == 2) $rarity = "★★";
+				if ($rarity == 3) $rarity = "★★★";
+				if ($rarity == 4) $rarity = "★★★★";
+				if ($rarity == 5) $rarity = "★★★★★";
+			$type = $row[cardtype];
+			$name = $row[cardname];
+			$p1 = $row[p1];
+			$p2 = $row[p2];
+			$p3 = $row[p3];
+			$p4 = $row[p4];
+			$patch = number_format($row[patch],2);
+
+			echo"
+			<div class='row cardinlist'>
+				
+				<div class='col-sm-7'>$name</div>
+				<div class='col-xs-3 col-sm-1'>$rarity</div>
+				<div class='col-xs-3 col-sm-1'>$type</div>
+				<div class='col-xs-3 col-sm-2 powerlevels'>
+					&nbsp;$p1<br>
+					$p3&nbsp;$p2<br>
+					&nbsp;$p4	
+				</div>
+				<div class='col-xs-3 col-sm-1'>$patch</div>
+				
+			</div>
+			";
+
+
+	        }
+echo"</table>";
+$result->free;
+?>
