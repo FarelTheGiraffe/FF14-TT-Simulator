@@ -1,0 +1,37 @@
+<h2>Players</h2>
+<small>Card database: Patch Patch 4.2 </small><br>
+
+<?php
+$link->set_charset("utf8");
+$query = "SELECT name, location, patch FROM tt_npcs ;";
+
+require("intern/dbconnect/get_query.php");
+
+echo '<table border="1">';
+echo"<div class='row bold'>				
+				<div class='col-xs-4 col-sm-6'>Name</div>
+				<div class='col-xs-5 col-sm-5'>Location</div>
+				<div class='col-xs-3 col-sm-1'>Patch</div>
+			</div>";
+
+		$num = mysqli_num_rows($result);
+        for ($i = 0; $i < $num; $i++)
+            {
+         	$row = mysqli_fetch_array($result);
+			$name = $row[name];
+			$location = $row[location];
+			$patch = number_format($row[patch],2);
+
+			echo"
+			<div class='row cardinlist'>
+				<div class='col-xs-4 col-sm-6'>$name</div>
+				<div class='col-xs-5 col-sm-5'>$location</div>
+				<div class='col-xs-3 col-sm-1'>$patch</div>
+			</div>
+			";
+
+
+	        }
+echo"</table>";
+$result->free;
+?>
