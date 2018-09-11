@@ -1,0 +1,18 @@
+
+
+
+nav				{border-bottom:1px solid #ddd; padding:20px 0 10px 0; margin:  0 0 20px 0;}
+footer			{border-top:1px solid #ddd; padding:10px 0 20px 0; margin: 20px 0 0 0;}
+
+
+/*	Table	*/
+.bold			{font-weight:bold;}
+.cardinlist		{border-bottom:1px solid #ddd; padding:10px;}
+.powerlevels	{/*height:100px;  background-color:red;  position: relative;*/ font-family:monospace;}
+.powerlevels span	{ /* position: absolute; */}
+/* 
+.powerlevels span:nth-child(1) { top:0%; left:50%;}
+.powerlevels span:nth-child(2) { top:30%; left:90%;}
+.powerlevels span:nth-child(3) { top:75%; left:50%;}
+.powerlevels span:nth-child(4) { top:30%; left:10%;}
+ */
