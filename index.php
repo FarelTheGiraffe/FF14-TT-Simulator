@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><? echo $seitentitel; ?></title>
+		<title><? echo $pagetitle; ?></title>
 		<meta name="viewport" content="initial-scale=1" charset="UTF-8">
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -28,7 +28,7 @@
 			</nav>
 		</div>
 		<?
-			//-------- Contentbereich   ----------------------------------->
+			//-------- Content   ----------------------------------->
 			/*include("content/home.htm"); */
 
 			if(file_exists("content/$path"))
@@ -36,7 +36,7 @@
 			else
 			include("404.htm");
 
-			//-----------Ende Contentbereich ------------------------------>
+			//-----------End of Content ------------------------------>
 		?>
 		
 		
