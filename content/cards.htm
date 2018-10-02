@@ -1,21 +1,24 @@
 <h2>All cards</h2>
-<small>Card database: Patch 4.35 </small><br>
+<small>Card database: Patch 4.4 </small><br>
 
 <?php
+//require("intern/dbconnect/conn.php");
 $link->set_charset("utf8");
+//$query = "SELECT rarity,type,name,p1,p2,p3,p4,patch FROM tt_cards ;";
 $query = "SELECT tt_cards.name as cardname, tt_attribute.name as cardtype,rarity,p1,p2,p3,p4,patch
 FROM tt_cards LEFT OUTER JOIN tt_attribute ON tt_cards.type=tt_attribute.id
-ORDER BY tt_cards.name;";
+WHERE deleted=0
+ORDER BY rarity,tt_cards.name;";
 require("intern/dbconnect/get_query.php");
 
 echo '<table border="1">';
 echo"<div class='row bold'>
 				
-				<div class='col-sm-7'>Name</div>
-				<div class='col-xs-3 col-sm-1'>Rarity</div>
-				<div class='col-xs-3 col-sm-1'>Type</div>
+				<div class='col-xs-12 col-sm-4'>Name</div>
+				<div class='col-xs-3 col-sm-2'>Rarity</div>
+				<div class='col-xs-3 col-sm-2'>Type</div>
 				<div class='col-xs-3 col-sm-2'>Power</div>
-				<div class='col-xs-3 col-sm-1'>Patch</div>
+				<div class='col-xs-3 col-sm-2'>Patch</div>
 				
 			</div>";
 
@@ -30,26 +33,27 @@ echo"<div class='row bold'>
 				if ($rarity == 3) $rarity = "★★★";
 				if ($rarity == 4) $rarity = "★★★★";
 				if ($rarity == 5) $rarity = "★★★★★";
+				if ($rarity == 6) $rarity = "★★★★★★";
 			$type = $row[cardtype];
 			$name = $row[cardname];
-			$p1 = $row[p1];
-			$p2 = $row[p2];
-			$p3 = $row[p3];
-			$p4 = $row[p4];
+			$p1 = $row[p1];	if($p1==10) $p1='A';
+			$p2 = $row[p2];	if($p2==10) $p2='A';
+			$p3 = $row[p3];	if($p3==10) $p3='A';
+			$p4 = $row[p4];	if($p4==10) $p4='A';
 			$patch = number_format($row[patch],2);
 
 			echo"
 			<div class='row cardinlist'>
 				
-				<div class='col-sm-7'>$name</div>
-				<div class='col-xs-3 col-sm-1'>$rarity</div>
-				<div class='col-xs-3 col-sm-1'>$type</div>
+				<div class='col-xs-12 col-sm-4'>$name</div>
+				<div class='col-xs-3 col-sm-2'>$rarity</div>
+				<div class='col-xs-3 col-sm-2'>$type</div>
 				<div class='col-xs-3 col-sm-2 powerlevels'>
 					&nbsp;$p1<br>
 					$p3&nbsp;$p2<br>
 					&nbsp;$p4	
 				</div>
-				<div class='col-xs-3 col-sm-1'>$patch</div>
+				<div class='col-xs-3 col-sm-2'>$patch</div>
 				
 			</div>
 			";
