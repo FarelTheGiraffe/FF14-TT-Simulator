@@ -1,33 +1,85 @@
 <h2>Players</h2>
-<small>Card database: Patch Patch 4.2 </small><br>
+<small>Card database: Patch Patch 4.4 </small><br>
 
 <?php
+//require("intern/dbconnect/conn.php");
 $link->set_charset("utf8");
-$query = "SELECT name, location, patch FROM tt_npcs ;";
+/* $query = "SELECT name, location, patch FROM tt_npcs 
+WHERE deleted=0
+ORDER BY patch;"; */
+$query = "SELECT U.id AS Npcid,U.name AS Name, U.location AS Location, U.patch AS Patch,
+R1.name AS rule1, R2.name AS rule2, deleted
+    FROM tt_npcs U
+    JOIN tt_rules R1 ON (R1.id = U.r1)
+    JOIN tt_rules R2 ON (R2.id = U.r2)
+WHERE deleted=0
+ORDER BY Patch
+;";
 
+
+// ,rarity,p1,p2,p3,p4,patch
+/* $query = "SELECT tt_npcs.name as npcname, tt_rules.name as rule1, tt_rules.name as rule2,
+FROM tt_npcs LEFT OUTER JOIN tt_rules ON tt_npcs.type=tt_rules.id
+ORDER BY tt_npcs.name;";
+*/
 require("intern/dbconnect/get_query.php");
 
 echo '<table border="1">';
 echo"<div class='row bold'>				
-				<div class='col-xs-4 col-sm-6'>Name</div>
-				<div class='col-xs-5 col-sm-5'>Location</div>
-				<div class='col-xs-3 col-sm-1'>Patch</div>
+				<div class='col-xs-6 col-sm-2'>Name</div>
+				<div class='col-xs-6 col-sm-5'>Location</div>
+				<div class='col-xs-6 col-sm-3'>Rules</div>
+				<div class='col-xs-6 col-sm-2'>Patch</div>
 			</div>";
 
 		$num = mysqli_num_rows($result);
         for ($i = 0; $i < $num; $i++)
             {
          	$row = mysqli_fetch_array($result);
-			$name = $row[name];
-			$location = $row[location];
-			$patch = number_format($row[patch],2);
+			$npcid = $row[Npcid];
+			$name = $row[Name];
+			$rule1 = $row[rule1];
+			$rule2 = $row[rule2];
+			$location = $row[Location];
+			$patch = number_format($row[Patch],2);
 
 			echo"
-			<div class='row cardinlist'>
-				<div class='col-xs-4 col-sm-6'>$name</div>
-				<div class='col-xs-5 col-sm-5'>$location</div>
-				<div class='col-xs-3 col-sm-1'>$patch</div>
+			<div class='row '>
+				<div class='col-xs-3 col-sm-2'>$name</div>
+				<div class='col-xs-3 col-sm-5'>$location</div>
+				<div class='col-xs-3 col-sm-3'>";		
+					echo"$rule1";
+					if($rule2!="")echo",$rule2";
+				echo"
+				</div>
+				<div class='col-xs-3 col-sm-2'>$patch</div>
 			</div>
+			<div class='row cardinlist'>
+				<div class='col-xs-12' style='text-align:left; padding-bottom:20px;'>
+					<b>Cards:</b>";
+					
+					$sub=1;
+					$query1 = "SELECT tt_cards.name AS npcscard,card_id,npc_id FROM tt_cards
+								INNER JOIN tt_card_npc ON
+								tt_cards.id=card_id
+								WHERE npc_id=$npcid
+								ORDER BY npcscard;";
+					require("intern/dbconnect/get_query.php");
+					$num1 = mysqli_num_rows($result1);
+					
+					for ($j = 0; $j < $num1; $j++)
+						{
+						$row1 = mysqli_fetch_array($result1);
+						$npcscard = $row1[npcscard];
+						if ($j>0) echo", ";
+						 echo"$npcscard";
+						}
+						
+			echo"
+				</div>
+			</div>
+			
+			
 			";
 
 
