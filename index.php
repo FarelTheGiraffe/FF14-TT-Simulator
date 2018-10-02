@@ -23,6 +23,7 @@
 					<li><a href="./">Home</a></li>
 					<li><a href='cards.htm'>Cards</a></li>
 					<li><a href='npc.htm'>Players</a></li>
+					<li><a href='report.htm'>Report</a></li>
 
 				</ul>
 			</nav>
