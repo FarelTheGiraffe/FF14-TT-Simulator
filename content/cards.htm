@@ -2,14 +2,10 @@
 <small>Card database: Patch 4.4 </small><br>
 
 <?php
-//require("intern/dbconnect/conn.php");
-$link->set_charset("utf8");
-//$query = "SELECT rarity,type,name,p1,p2,p3,p4,patch FROM tt_cards ;";
 $query = "SELECT tt_cards.name as cardname, tt_attribute.name as cardtype,rarity,p1,p2,p3,p4,patch
 FROM tt_cards LEFT OUTER JOIN tt_attribute ON tt_cards.type=tt_attribute.id
 WHERE deleted=0
 ORDER BY rarity,tt_cards.name;";
-require("intern/dbconnect/get_query.php");
 
 echo '<table border="1">';
 echo"<div class='row bold'>
