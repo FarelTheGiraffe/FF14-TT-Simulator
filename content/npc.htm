@@ -2,11 +2,7 @@
 <small>Card database: Patch Patch 4.4 </small><br>
 
 <?php
-//require("intern/dbconnect/conn.php");
-$link->set_charset("utf8");
-/* $query = "SELECT name, location, patch FROM tt_npcs 
-WHERE deleted=0
-ORDER BY patch;"; */
+
 $query = "SELECT U.id AS Npcid,U.name AS Name, U.location AS Location, U.patch AS Patch,
 R1.name AS rule1, R2.name AS rule2, deleted
     FROM tt_npcs U
@@ -16,13 +12,6 @@ WHERE deleted=0
 ORDER BY Patch
 ;";
 
-
-// ,rarity,p1,p2,p3,p4,patch
-/* $query = "SELECT tt_npcs.name as npcname, tt_rules.name as rule1, tt_rules.name as rule2,
-FROM tt_npcs LEFT OUTER JOIN tt_rules ON tt_npcs.type=tt_rules.id
-ORDER BY tt_npcs.name;";
-*/
-require("intern/dbconnect/get_query.php");
 
 echo '<table border="1">';
 echo"<div class='row bold'>				
