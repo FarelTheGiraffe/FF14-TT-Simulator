@@ -2,23 +2,70 @@
 <small>Card database: Patch Patch 4.4 </small><br>
 
 <?php
+$o= $_GET['o'];
 
+
+$direction= $_GET['direction'];
+
+
+if ($o=="") 		$order="ORDER BY Patch,Name;";
+if ($o=="name") 	$order="ORDER BY Name  $direction;";
+if ($o=="rule") 	$order="ORDER BY rule1  $direction, rule2 $direction, Name;";
+if ($o=="location") $order="ORDER BY location  $direction,Name;";
+if ($o=="patch") 	$order="ORDER BY Patch  $direction,Name;";
+
+
+if ($direction=="desc")	$direction="asc";
+elseif ($direction=="asc")	$direction="desc";
+if ($direction=="")	$direction="desc";
+
+
+if ($o=="name") 	$directionname		="&direction=$direction";
+if ($o=="rule") 	$directionrule		="&direction=$direction";
+if ($o=="location") $directionlocation	="&direction=$direction";
+if ($o=="patch") 	$directionpatch		="&direction=$direction";
+
+
+//require("intern/dbconnect/conn.php");
+$link->set_charset("utf8");
+/* $query = "SELECT name, location, patch FROM tt_npcs 
+WHERE deleted=0
+ORDER BY patch;"; */
 $query = "SELECT U.id AS Npcid,U.name AS Name, U.location AS Location, U.patch AS Patch,
 R1.name AS rule1, R2.name AS rule2, deleted
     FROM tt_npcs U
     JOIN tt_rules R1 ON (R1.id = U.r1)
     JOIN tt_rules R2 ON (R2.id = U.r2)
 WHERE deleted=0
-ORDER BY Patch
-;";
+$order";
 
+
+
+// ,rarity,p1,p2,p3,p4,patch
+/* $query = "SELECT tt_npcs.name as npcname, tt_rules.name as rule1, tt_rules.name as rule2,
+FROM tt_npcs LEFT OUTER JOIN tt_rules ON tt_npcs.type=tt_rules.id
+ORDER BY tt_npcs.name;";
+*/
+require("intern/dbconnect/get_query.php");
 
 echo '<table border="1">';
 echo"<div class='row bold'>				
-				<div class='col-xs-6 col-sm-2'>Name</div>
-				<div class='col-xs-6 col-sm-5'>Location</div>
-				<div class='col-xs-6 col-sm-3'>Rules</div>
-				<div class='col-xs-6 col-sm-2'>Patch</div>
+				<div class='col-xs-6 col-sm-2'>
+					<a href='npc.htm?o=name$directionname'>
+					Name</a>
+				</div>
+				<div class='col-xs-6 col-sm-5'>
+					<a href='npc.htm?o=location$directionlocation'>
+					Location </a>
+				</div>
+				<div class='col-xs-6 col-sm-3'>
+					<a href='npc.htm?o=rule$directionrule'>
+					Rules </a>
+				</div>
+				<div class='col-xs-6 col-sm-2'>
+					<a href='npc.htm?o=patch$directionpatch'>
+					Patch	 </a>
+				</div>
 			</div>";
 
 		$num = mysqli_num_rows($result);
