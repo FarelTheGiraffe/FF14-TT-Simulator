@@ -1,3 +1,4 @@
+<!--- here comes the connection stuff --->
 <!DOCTYPE html>
 <html>
 	<head>
@@ -13,21 +14,32 @@
 	<body>
 	<div class="container-fluid" style="">
 	<!---Container--->
+	<div class="container-fluid" style="">
+	<!---Container--->
 	<div class="container" style="">
 		<div class='row'>
-			<h1>Triple Triad Simulator</h1>
-			
-
-			<nav>
-				<ul>
-					<li><a href="./">Home</a></li>
-					<li><a href='cards.htm'>Cards</a></li>
-					<li><a href='npc.htm'>Players</a></li>
-					<li><a href='report.htm'>Report</a></li>
-
-				</ul>
-			</nav>
+			<div class='col-sm-6'>
+				<h1>Triple Triad Simulator</h1>
+				<h6>Database: Patch 4.45</h6>
+				<nav>
+					<ul>
+						<li><a href="./">Home</a></li>
+						<li><a href='cards.htm'>Cards</a></li>
+						<li><a href='npc.htm'>Players</a></li>
+						<li><a href='usercards.htm'> My Card Collection</a></li>
+						<li><a href='usernpcs.htm'> NPCs defeated</a></li>
+						
+						<li><a href='report.htm'>Report</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class='col-sm-6'>
+				<br>
+				<br>
+				<!--- here comes the login form --->
+			</div>	
 		</div>
+		<hr>
 		<?
 			//-------- Content   ----------------------------------->
 			/*include("content/home.htm"); */
@@ -54,3 +66,4 @@
 	</div>	
 	</body>
 </html>
+<!--- here comes the Javascript --->
