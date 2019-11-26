@@ -1,0 +1,12 @@
+RewriteEngine on
+RewriteBase /tripletriad
+
+
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-F
+RewriteRule ^([^/]+)$ index.php?path=$1 [QSA]
+
+
+
+
