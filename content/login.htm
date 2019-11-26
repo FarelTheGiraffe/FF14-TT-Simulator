@@ -1,0 +1,17 @@
+<?php
+ if (isset($_SESSION['user']) && $path!='logout.htm') {
+   echo "You are logged in as ".$_SESSION['user'].".<br>
+   <a href='user_settings.htm'>User Settings</a><br>
+   <a href='logout.htm'>Logout</a>";
+ } else {
+	 echo"
+   <form action = '' method = 'post'>
+	  <label>Username  :</label><input type = 'text' name = 'user' class = 'box task_input form-control' required><br />
+	  <label>Password  :</label><input type = 'password' name = 'password' class = 'box task_input form-control' required><br />
+	  <button type ='submit' name='submit' class=' btn btn-brown' >Submit</button>
+   </form>
+   <div style = 'font-size:11px; color:#cc0000; margin-top:10px'>$error</div><br>
+	<a href='forgot.htm'>Click here</a> if you forgot your password.<br>
+	<a href='register.htm'>Click here</a> to register a new account.";
+ }
+?>

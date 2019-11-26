@@ -1,0 +1,49 @@
+<h2>Registration</h2>
+<div class="row">
+<?php
+if (	isset($_REQUEST['username'])	){
+echo"<div class='col-sm-4'>";
+	$username = stripslashes($_POST['username']);
+	$username = mysqli_real_escape_string($link,$username); 
+	$email = stripslashes($_POST['email']);
+	$email = mysqli_real_escape_string($link,$email);
+	$password = stripslashes($_POST['password']);
+	$password = mysqli_real_escape_string($link,$password);
+	$trn_date = date("Y-m-d H:i:s");
+	
+	$query = "INSERT into `tt_users` (nick, user_pass, user_email, trn_date)
+		VALUES ('$username', md5('$password'), '$email', '$trn_date')";
+	$result = mysqli_query($link,$query);
+	
+	if($result){
+		echo "<div class='form'>
+		<h3>You are registered successfully.</h3>
+		<meta http-equiv='refresh' content='3;url=home.htm' />
+		</div>";
+	}else{
+		echo "<div class='form'>
+		<h3>The username is already used!</h3>
+		<meta http-equiv='refresh' content='3;url=register.htm' />
+		</div>";
+	}
+	
+	echo "</div>";
+    }else{
+?>
+<div class="form col-sm-4">
+
+	<p id="demo"></p>
+	<form name="registration" action="register.htm" method="post" onsubmit="return validate()">
+		<input id="name"  class = 'task_input form-control' type="text" name="username" placeholder="Username" required />
+		<input type="email"  class = 'task_input form-control' name="email" placeholder="Email" required />
+		<input id="pass"  class = 'task_input form-control' type="password" name="password" placeholder="Password" required />
+		<input id="pass2"  class = 'task_input form-control' type="password" name="password2" placeholder="Repeat the password" required />
+		<input type="hidden"  class = 'task_input form-control' name="register" value="registering" /><br>
+		
+		
+		<button type ='submit' name='submit' class=' btn btn-brown' >Register</button>
+		<div id="message" style = 'font-size:11px; color:#cc0000; margin-top:10px'></div>
+	</form>
+</div>
+<?php } ?>
+</div>

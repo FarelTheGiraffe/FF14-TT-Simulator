@@ -1,12 +1,10 @@
 <h2>Players</h2>
-<small>Card database: Patch Patch 4.4 </small><br>
-
+<br>
+<div class="row">
+<div class="col-sm-12">
 <?php
 $o= $_GET['o'];
-
-
 $direction= $_GET['direction'];
-
 
 if ($o=="") 		$order="ORDER BY Patch,Name;";
 if ($o=="name") 	$order="ORDER BY Name  $direction;";
@@ -14,23 +12,16 @@ if ($o=="rule") 	$order="ORDER BY rule1  $direction, rule2 $direction, Name;";
 if ($o=="location") $order="ORDER BY location  $direction,Name;";
 if ($o=="patch") 	$order="ORDER BY Patch  $direction,Name;";
 
-
 if ($direction=="desc")	$direction="asc";
 elseif ($direction=="asc")	$direction="desc";
 if ($direction=="")	$direction="desc";
-
 
 if ($o=="name") 	$directionname		="&direction=$direction";
 if ($o=="rule") 	$directionrule		="&direction=$direction";
 if ($o=="location") $directionlocation	="&direction=$direction";
 if ($o=="patch") 	$directionpatch		="&direction=$direction";
 
-
-//require("intern/dbconnect/conn.php");
 $link->set_charset("utf8");
-/* $query = "SELECT name, location, patch FROM tt_npcs 
-WHERE deleted=0
-ORDER BY patch;"; */
 $query = "SELECT U.id AS Npcid,U.name AS Name, U.location AS Location, U.patch AS Patch,
 R1.name AS rule1, R2.name AS rule2, deleted
     FROM tt_npcs U
@@ -39,13 +30,6 @@ R1.name AS rule1, R2.name AS rule2, deleted
 WHERE deleted=0
 $order";
 
-
-
-// ,rarity,p1,p2,p3,p4,patch
-/* $query = "SELECT tt_npcs.name as npcname, tt_rules.name as rule1, tt_rules.name as rule2,
-FROM tt_npcs LEFT OUTER JOIN tt_rules ON tt_npcs.type=tt_rules.id
-ORDER BY tt_npcs.name;";
-*/
 require("intern/dbconnect/get_query.php");
 
 echo '<table border="1">';
@@ -80,8 +64,8 @@ echo"<div class='row bold'>
 			$patch = number_format($row[Patch],2);
 
 			echo"
-			<div class='row '>
-				<div class='col-xs-3 col-sm-2'>$name</div>
+			<div class='row playerinlist'>
+				<div class='col-xs-3 col-sm-2'><b>$name</b></div>
 				<div class='col-xs-3 col-sm-5'>$location</div>
 				<div class='col-xs-3 col-sm-3'>";		
 					echo"$rule1";
@@ -90,9 +74,9 @@ echo"<div class='row bold'>
 				</div>
 				<div class='col-xs-3 col-sm-2'>$patch</div>
 			</div>
-			<div class='row cardinlist'>
+			<div class='row '>
 				<div class='col-xs-12' style='text-align:left; padding-bottom:20px;'>
-					<b>Cards:</b>";
+					Cards: ";
 					
 					$sub=1;
 					$query1 = "SELECT tt_cards.name AS npcscard,card_id,npc_id FROM tt_cards
@@ -110,16 +94,12 @@ echo"<div class='row bold'>
 						if ($j>0) echo", ";
 						 echo"$npcscard";
 						}
-						
 			echo"
 				</div>
-			</div>
-			
-			
-			";
-
-
+			</div>";
 	        }
 echo"</table>";
 $result->free;
 ?>
+</div>
+</div>

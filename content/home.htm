@@ -1,13 +1,54 @@
-<h2>Updates</h2>
+<?php
+$link->set_charset("utf8");
+$query = "SELECT * FROM tt_admins";
+require("intern/dbconnect/get_query.php");
+$q1 = mysqli_num_rows($result);
+
+$query = "SELECT * FROM tt_cards WHERE deleted=0";
+require("intern/dbconnect/get_query.php");
+$q2 = mysqli_num_rows($result);
+
+$query = "SELECT * FROM tt_npcs WHERE deleted=0";
+require("intern/dbconnect/get_query.php");
+$q3 = mysqli_num_rows($result);
+
+$query = "SELECT * FROM tt_users";
+require("intern/dbconnect/get_query.php");
+$q4 = mysqli_num_rows($result);
+$q4 = $q4 -4;
+
+
+
+?>
+<div class="row">
+<div class="col-sm-12">
+<h2>Current statistics</h2>
+	<?php echo"
+	<p>
+	Cards: <b>$q2</b><br>
+	NPCs: <b>$q3</b><br>
+	Administrators: <b>$q1</b><br>
+	Registered users: <b>$q4</b>
+	</p>
+	"; ?>
+<h2>Site Updates</h2>
 	<ul>
-		<li>2018-11-04 - version 0.22 - Add sorting options for card/player lists</li>
+		<li>2019-07-20 - No changes other than updating the card database. Just letting people know that the project isn't dead yet. It's just been put on hold for now, as other things take priority.</li>
+		<li>2019-03-31 - version 0.29 - Added statistics on the number of administrators, users, cards and NPCs registered in the database.</li>
+		<li>2019-02-26 - version 0.28 - Improve visuals of the site</li>
+		<li>2019-01-13 - version 0.27 - Added several new options to the menu</li>
+		<li>2018-12-28 - version 0.26 - Added options for users to register a single deck for them to use (to be improved later)</li>
+		<li>2018-12-22 - version 0.25 - Added options for users to store a list of all cards they have collected, and all NPCs they have defeated</li>
+		<li>2018-12-21 - version 0.24 - Added options to change passwords, emails, as well as a password reset option</li>
+		<li>2018-12-20 - version 0.23 - Added options to add user accounts</li>
+		<li>2018-11-04 - version 0.22 - Added sorting options for card/player lists</li>
 		<li>2018-09-30 - version 0.20 - Assigned all cards to all players</li>
 		<li>2018-09-28 - version 0.17 - A report page has been added</li>
 		<li>2018-09-23 - version 0.15 - A tool for adding, removing cards from players has been added</li>
 		<li>2018-09-19 - version 0.12 - A tool for adding, editing rules for players has been added</li>
 		<li>2018-09-18 - version 0.11 - A tool for adding, editing and deleting players has been added</li>
 		<li>2018-09-17 - version 0.10 - A tool for adding, editing and deleting cards has been added</li>
-		<li>2018-08-31 - version 0.09 - Admin sectuib has been implemented</li>
+		<li>2018-08-31 - version 0.09 - The Admin section has been implemented</li>
 		<li>2018-08-28 - version 0.08 - NPC list has been implemented</li>
 		<li>2018-08-27 - version 0.07 - Card list has been implemented</li>
 		<li>2018-08-14 - version 0.06 - Menu works</li>
@@ -15,20 +56,30 @@
 		<li>2018-07-25 - version 0.02 - Player database established</li>
 		<li>2018-07-23 - version 0.01 - Card database established</li>
 	</ul>
-		
+
+<h2>Database Updates</h2>
+	<ul>
+		<li>2019-11-02 - updated for patch 5.10</li>	
+		<li>2019-07-20 - updated for patch 5.00</li>	
+		<li>2019-03-31 - updated for patch 4.56</li>	
+		<li>2019-02-20 - updated for patch 4.55</li>	
+		<li>2019-01-13 - updated for patch 4.5</li>	
+	</ul>
+	
 <h2>Planned additions</h2>
 	<ul>
-		
-		<li>add user accounts</li>
-		<li>add card collections to user accounts</li>
-		<li>add defeated NPCs to user accounts</li>
 		<li>design how the simulation would function</li>
 		<li>program the game field</li>
 		<li>program how it all functions</li>
 		<li>program the rules</li>
 		<li>program a tournament feature</li>
 		<li>program a way to find the true best deck</li>
-		<li>improve the visuals of the site</li>
 		<li>add info on predictability of cards being played</li>
+		<li>Possibly improve the visuals of the site further</li>
 		
 	</ul>
+</div>
+</div>
+<!----
+<li></li>
+------>

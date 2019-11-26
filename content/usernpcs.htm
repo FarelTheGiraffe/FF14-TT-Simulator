@@ -1,0 +1,125 @@
+<h2>NPCs defeated</h2> 
+<div class="row">
+
+ <?php
+if ($_SESSION['user'] == null)
+{
+	echo"<div class='col-lg-4 col-md-4 col-sm-6 '><p>You are required to login to view this page.</p>";
+		include("content/login.htm");
+	echo "</div>";
+}
+else
+{
+	$nr			= $_SESSION['userid'];
+	$insert		= $_POST['insert'];
+	$delete		= $_POST['delete'];
+	$sort		= $_POST['sort'];
+
+	echo"<div class='col-sm-12'>
+	NPCs defeated by <b>".$_SESSION['user']."</b>
+
+	<br>
+	<br>
+	</div>
+	";
+	
+							
+	// ********************************  Adding the card ******************************* /
+	 if($insert > 0)
+			 {
+				$query = " insert ignore into  tt_npc_user ( user_id, npc_id, sort)
+											  values ($nr, $insert, $sort)";
+				include("intern/dbconnect/get_query.php");
+				$result->free;
+				$insert = 0; $delete=0;
+			 }
+	// ********************************  Removing the card ******************************* /
+	 if($delete >0 )
+			 {
+				$query = " delete from tt_npc_user where
+						 npc_id = $delete and user_id = $nr";
+				include("intern/dbconnect/get_query.php");
+				$result->free;
+				$delete = 0; $insert = 0;
+			 }
+			 
+	echo"
+	<form name='tt_npc_user' action='usernpcs.htm?nr=$nr' method='post'>
+	<div class='col-md-2 col-lg-3 '>
+	</div>
+	<div class='col-xs-5 col-md-3 col-lg-2'>Already defeated NPCs<br>";
+		/**************** Query *********************/
+				$query = " select * from tt_npc_user, tt_npcs
+						 where user_id = $nr
+						 and tt_npcs.id = npc_id
+						 and deleted=0
+						 order by sort, name";
+				 require("intern/dbconnect/get_query.php");
+				 if(!$result)echo"Query 2 failed";
+	
+
+						  echo"
+						  <SELECT NAME='delete' class='form-control' size='16' style=''>";
+							$num = mysqli_num_rows($result);
+							for ($i = 0; $i < $num; $i++)
+							{
+								$row = mysqli_fetch_array($result);
+								$sort = $row[sort];
+								$sort = sprintf("%02d", $sort);
+								echo "<OPTION  VALUE='$row[id]'>$row[name]";
+							}
+						$result->free;
+					echo "</SELECT>";
+	
+	
+	
+	
+	
+	
+	echo"
+	</div>
+	<div class='col-xs-2  '>
+		<input name='sort' value='0' type='hidden' style='text-align:center;' tabindex='1'>
+					
+					<button id='crossoverbutton' type ='submit' name='submit' class=' btn btn-brown' ><---></button>
+	</div>
+	<div class='col-xs-5  col-md-3 col-lg-2'>List of NPCs<br>";
+
+				$query = "select * from tt_npcs where 1 and deleted=0 order by name";
+				require("intern/dbconnect/get_query.php");
+					if(!$result)echo"Query 3 failed".mysql_error();
+
+
+
+
+
+
+				echo"
+					<SELECT NAME='insert' class='form-control'  size='16' style=''>";
+							$num = mysqli_num_rows($result);
+							for ($i = 0; $i < $num; $i++)
+						   {
+							 $row = mysqli_fetch_array($result);
+							 echo"<OPTION VALUE='$row[id]'";
+							 if($row[id]==0)echo" class='main'";echo">$row[name]";
+							}
+						$result->free;
+						echo"
+						</SELECT>
+						<input type='hidden' name='id' value='$id'>
+						";
+
+	echo"
+	</div>
+	<div class='col-md-2 col-lg-3'>
+	</div>
+	";
+	
+	$link->close;
+	echo"
+
+	 </form>
+	 ";
+ }
+?>
+</div>

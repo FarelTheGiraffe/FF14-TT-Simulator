@@ -1,12 +1,11 @@
 <h2>All cards</h2>
-<small>Card database: Patch 4.4 </small><br>
-
+<br>
+<div class="row">
+<div class="col-sm-12">
 <?php
 $o= $_GET['o'];
 
-
 $direction= $_GET['direction'];
-
 
 if ($o=="") 		$order="ORDER BY rarity,tt_cards.name;";
 if ($o=="name") 	$order="ORDER BY tt_cards.name  $direction;";
@@ -18,11 +17,9 @@ if ($o=="p3") 		$order="ORDER BY p3  $direction,p4 $direction,p1 $direction,p2 $
 if ($o=="p4") 		$order="ORDER BY p4  $direction,p1 $direction,p2 $direction,p3 $direction,tt_cards.name;";
 if ($o=="patch") 	$order="ORDER BY patch  $direction,tt_cards.name;";
 
-
 if ($direction=="desc")	$direction="asc";
 elseif ($direction=="asc")	$direction="desc";
 if ($direction=="")	$direction="desc";
-
 
 if ($o=="name") 	$directionname		="&direction=$direction";
 if ($o=="rarity") 	$directionrarity	="&direction=$direction";
@@ -33,58 +30,46 @@ if ($o=="p3") 		$directionp3		="&direction=$direction";
 if ($o=="p4") 		$directionp4		="&direction=$direction";
 if ($o=="patch") 	$directionpatch		="&direction=$direction";
 
-
-
-//require("intern/dbconnect/conn.php");
 $link->set_charset("utf8");
-//$query = "SELECT rarity,type,name,p1,p2,p3,p4,patch FROM tt_cards ;";
 $query = "SELECT tt_cards.name as cardname, tt_attribute.name as cardtype,rarity,p1,p2,p3,p4,patch
 FROM tt_cards LEFT OUTER JOIN tt_attribute ON tt_cards.type=tt_attribute.id
 WHERE deleted=0
 $order";
 require("intern/dbconnect/get_query.php");
 
-echo '<table border="1" id="cardTable">';
-echo"<div class='row bold'>
-				
-				<div class='col-xs-12 col-sm-4' >
-					<a href='cards.htm?o=name$directionname'>
-					Name</a>
-				</div>
-				<div class='col-xs-3 col-sm-2' >
-					<a href='cards.htm?o=rarity$directionrarity'>
-					Rarity	 </a>
-				</div>
-				<div class='col-xs-3 col-sm-2' >
-					<a href='cards.htm?o=type$directiontype'>
-					Type	 </a>
-				</div>
-				<div class='col-xs-3 col-sm-2' >
-					
-					Power	
-					<a href='cards.htm?o=p1$directionp1'>	&#x2BC5;	</a>
-					<a href='cards.htm?o=p2$directionp2'>	&#x2BC8;	</a>
-					<a href='cards.htm?o=p3$directionp3'>	&#x2BC6;	</a>
-					<a href='cards.htm?o=p4$directionp4'>	&#x2BC7;	</a>
-					
-
-
-					<!---
-						<button 	onclick='sortTable(3)'>	&#x2195; </a>
-					---->
-				</div>
-				<div class='col-xs-3 col-sm-2' >
-					<a href='cards.htm?o=patch$directionpatch'>
-					Patch	 </a>
-				</div>
-				
-			</div>";
+echo"
+<table border='1' id='cardTable'>
+	<div class='row bold'>
+		<div class='col-xs-12 col-sm-4' >
+			<a href='cards.htm?o=name$directionname'>
+			Name</a>
+		</div>
+		<div class='col-xs-3 col-sm-2' >
+			<a href='cards.htm?o=rarity$directionrarity'>
+			Rarity</a>
+		</div>
+		<div class='col-xs-3 col-sm-2' >
+			<a href='cards.htm?o=type$directiontype'>
+			Type</a>
+		</div>
+		<div class='col-xs-3 col-sm-2' >
+			Power	
+			<a href='cards.htm?o=p1$directionp1'>	&#x2BC5;	</a>
+			<a href='cards.htm?o=p2$directionp2'>	&#x2BC8;	</a>
+			<a href='cards.htm?o=p3$directionp3'>	&#x2BC6;	</a>
+			<a href='cards.htm?o=p4$directionp4'>	&#x2BC7;	</a>
+			<!---	<button 	onclick='sortTable(3)'>	&#x2195; </a>	---->
+		</div>
+		<div class='col-xs-3 col-sm-2' >
+			<a href='cards.htm?o=patch$directionpatch'>
+			Patch	 </a>
+		</div>
+	</div>";
 
 		$num = mysqli_num_rows($result);
         for ($i = 0; $i < $num; $i++)
             {
          	$row = mysqli_fetch_array($result);
-
 			$rarity = $row[rarity];
 				if ($rarity == 1) $rarity = "★";
 				if ($rarity == 2) $rarity = "★★";
@@ -102,7 +87,6 @@ echo"<div class='row bold'>
 
 			echo"
 			<div class='row cardinlist'>
-				
 				<div class='cardfield col-xs-12 col-sm-4'>$name</div>
 				<div class='cardfield col-xs-3 col-sm-2'>$rarity</div>
 				<div class='cardfield col-xs-3 col-sm-2'>$type</div>
@@ -112,12 +96,10 @@ echo"<div class='row bold'>
 					&nbsp;$p3	
 				</div>
 				<div class='col-xs-3 col-sm-2'>$patch</div>
-				
-			</div>
-			";
-
-
+			</div>";
 	        }
 echo"</table>";
 $result->free;
 ?>
+</div>
+</div>

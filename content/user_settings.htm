@@ -1,0 +1,92 @@
+<h2>User Settings</h2> 
+<div class="row">
+
+
+ <?php
+if ($_SESSION['user'] == null)
+{
+
+	echo"<div class='col-lg-4 col-md-4 col-sm-6 '><p>You are required to login to view this page.</p>";
+		include("content/login.htm");
+	echo "</div>";
+}
+elseif($_SESSION['user'] == 'guest'){
+
+	echo"<div class='col-lg-4 col-md-4 col-sm-6 '><p>You cannot access this page when logged in as a guest!</p></div>";
+}
+else
+{ 
+	if (isset($_REQUEST['curpassword'])	){
+		$curruser	 = $_SESSION['user'];
+		$curpassword = stripslashes($_POST['curpassword']);
+		$curpassword = mysqli_real_escape_string($link,$curpassword);
+		$newpassword 	= stripslashes($_POST['password']);
+		$newpassword 	= mysqli_real_escape_string($link,$newpassword);
+		$newemail 		= stripslashes($_POST['email']);
+		$newemail 		= mysqli_real_escape_string($link,$newemail);
+		
+		$sql = "SELECT user_id FROM tt_users WHERE nick = '$curruser' and user_pass=md5('$curpassword')";
+		$result = mysqli_query($db,$sql);
+		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+		$count = mysqli_num_rows($result);
+
+		if ($count==1){
+				if ($newpassword!="" && $newemail!=""){
+					$query1="UPDATE tt_users
+						SET user_pass = md5('$newpassword'), user_email = '$newemail' 
+						WHERE nick = '$curruser' ";
+				}
+				elseif ($newpassword!="" && $newemail==""){
+					$query1="UPDATE tt_users
+						SET user_pass = md5('$newpassword')
+						WHERE nick = '$curruser' ";
+				}
+				elseif ($newpassword=="" && $newemail!=""){
+					$query1="UPDATE tt_users
+						SET user_email = '$newemail'
+						WHERE nick = '$curruser' ";
+				}else {
+				$error="You commited no change!";
+				}
+
+				if ($error==""){
+					$sub=1;
+					require("intern/dbconnect/get_query.php");
+					
+					if($result1){
+						echo "<div class='form'>
+						<h3>Success! You shall be redirected in a moment.</h3>
+						<meta http-equiv='refresh' content='3;url=home.htm' />
+						</div>";
+						}
+						else{
+						$error="There was an error with sending the e-mail with the new password!";
+						}
+				}
+			}
+			else
+			{
+				$error="Wrong password!";
+			}
+		}
+	?>
+		<div class='col-lg-4 col-md-4 col-sm-6 '>
+			<form name="registration" action="user_settings.htm" method="post" onsubmit="return validate2()">
+				<input class = 'task_input form-control' type="email" name="email" placeholder="New Email"  />
+				<input class = 'task_input form-control' id="pass" type="password" name="password" placeholder="New password"  />
+				<input class = 'task_input form-control' id="pass2" type="password" name="password2" placeholder="Repeat the password"  />
+				<input class = 'task_input form-control' type="hidden" name="register" value="registering" /><br>
+				<br>
+				<input class = 'task_input form-control' id="pass3" type="password" name="curpassword" placeholder="Enter current Password"  required><br>
+				
+
+				<button type ='submit' name='submit' class=' btn btn-brown' >Update</button>
+				
+				<? echo"<div style = 'font-size:11px; color:#cc0000; margin-top:10px'>$error</div>"; ?>
+				<div id="message" style = 'font-size:11px; color:#cc0000; margin-top:10px'></div>
+			</form>
+		</div>
+	<?php
+}
+ ?>
+</div>

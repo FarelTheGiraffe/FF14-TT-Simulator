@@ -1,0 +1,18 @@
+<h2>Login Page</h2> 
+<div class="row">
+
+ <?php
+if ($_SESSION['user'] == null)
+{
+
+	echo"<div class='col-lg-4 col-md-4 col-sm-6 '>";
+		include("content/login.htm");
+	echo "</div>";
+}
+else
+{
+	echo "<meta http-equiv='refresh' content='0; url=http://farelforever.com/tripletriad/' />";
+ }
+?>
+</div>
+

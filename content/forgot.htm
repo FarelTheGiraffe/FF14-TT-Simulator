@@ -1,0 +1,84 @@
+<h2>Forgot Password</h2>
+<div class="row">
+<?php
+
+if (	isset($_REQUEST['username'])	){
+echo"<div class='col-sm-4'>";
+
+	$username = stripslashes($_POST['username']);
+	$username = mysqli_real_escape_string($link,$username); 
+	$email = stripslashes($_POST['email']);
+	$email = mysqli_real_escape_string($link,$email);
+	$trn_date = date("Y-m-d H:i:s");
+	$query = "SELECT * FROM `tt_users` WHERE nick = '$username' AND user_email='$email'";
+	$result = mysqli_query($link,$query);
+	$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+	$count = mysqli_num_rows($result);
+	if ($count==1){
+		$newpassword = rand(999999, 99999999);
+		$sub=1;
+		$query1 = "UPDATE tt_users
+		SET user_pass = md5($newpassword)
+		WHERE nick = '$username' AND user_email='$email'";
+		
+		require("intern/dbconnect/get_query.php");
+		
+		if($result1){
+			$to = $email;
+			$subject = "Triple Triad Simulator - Your Recovered Password";
+			$message = "Please use this password to login: " . $newpassword."\r\n\r\nPlease login with it, and change your password.";
+			$headers = "From : noreply@farelforever.com";
+			$sended =   mail($to, $subject, $message, $headers);
+			if(	$sended==1){
+				echo "<div class='form'>
+				<h3>Your Password has been sent to your email id.</h3>
+				<meta http-equiv='refresh' content='3;url=home.htm' />
+				</div>";
+			}
+			else
+			{
+				echo "<div class='form'>
+				<h3>There was an error with sending the e-mail with the new password!</h3>
+				<meta http-equiv='refresh' content='3;url=forgot.htm' />
+				</div>";
+			}
+		}
+		else
+		{
+			echo "<div class='form'>
+			<h3>There was an error with reseting your new password!</h3>
+			<meta http-equiv='refresh' content='3;url=forgot.htm' />
+			</div>";
+		}
+	}
+	else
+	{
+		echo "<div class='form'>
+		<h3>Username and Email combination does not exist in the database!</h3>
+		<meta http-equiv='refresh' content='3;url=forgot.htm' />
+		</div>";
+	}
+	echo "</div>";
+}
+else
+{
+?>
+<div class="form col-sm-4">
+	
+	<p id="demo"></p>
+	<form name="forgot" action="forgot.htm" method="POST" >
+		<input id="name"  class = 'task_input form-control' type="text" name="username" placeholder="Username" required />
+		<input type="email"  class = 'task_input form-control' name="email" placeholder="Email" required />
+		<br>
+		
+		
+		<button type ='submit' name='submit' class=' btn btn-brown' >Send reminder</button>
+		
+		<div id="message" style = 'font-size:11px; color:#cc0000; margin-top:10px'></div>
+	</form>
+</div>
+
+<?php } ?>
+<div class="col-sm-8">
+</div>
+</div>
