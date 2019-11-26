@@ -12,12 +12,8 @@
 	<link rel="stylesheet" type="text/css" href="../css/style_intern.css">
 </head>
 
-
-
 <body>
 <?php
-
-
 echo"
 <div style='padding-top:30px;font-family:arial black; font-size:13px;color:#b1b1b1;text-align:center;padding:10px;'>
 Welcome $login_session !
@@ -25,7 +21,7 @@ Welcome $login_session !
 <table width='100%' cellspacing='0'>
 	<tr>
 		<td  align='center' style='padding:6px;'>
-			<a href='mitte.php' target='main' class='navi_butt'>Home</a>
+			<a href='middle.php' target='main' class='navi_butt'>Home</a>
 		</td>
 	</tr>
 	<tr>
@@ -39,7 +35,6 @@ Welcome $login_session !
 		</td>
 	</tr>
 				";
-
 ?>
                 <tr>
 					<td height='70'></td>

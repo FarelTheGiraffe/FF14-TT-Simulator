@@ -1,0 +1,73 @@
+<script type="text/javascript">
+function validate(){
+	var name=document.getElementById('name').value;
+	var pass=document.getElementById('pass').value;
+	var pass2=document.getElementById('pass2').value;
+
+	if(name.length < 4){
+		document.getElementById('message').innerHTML = 'Your username has to be at least 4 characters long';
+		return false;
+	}
+
+	if(pass.length < 6){
+		document.getElementById('message').innerHTML = 'Your password has to be at least 6 characters long';
+		return false;
+	}
+
+	if (! /^[a-zA-Z0-9]+$/.test(name)) {
+		document.getElementById('message').innerHTML = 'Please enter only letters from a to z, or numbers in the username';
+		return false;
+	}
+
+	if (! /^[a-zA-Z0-9]+$/.test(pass)) {
+
+		document.getElementById('message').innerHTML = 'Please enter only letters from a to z, or numbers in the password';
+		return false;
+	}
+
+	if (	pass != pass2	) {
+		document.getElementById('message').innerHTML = 'The passwords do not match';
+		return false;
+	}
+
+	document.getElementById('message').innerHTML = '';
+	return true;
+}
+
+		
+function validate2(){
+	var pass=document.getElementById('pass').value;
+	var pass2=document.getElementById('pass2').value;
+
+	if(pass.length < 6){
+		document.getElementById('message').innerHTML = 'Your password has to be at least 6 characters long';
+		return false;
+	}
+
+	if (! /^[a-zA-Z0-9]+$/.test(pass)) {
+
+		document.getElementById('message').innerHTML = 'Please enter only letters from a to z, or numbers in the password';
+		return false;
+	}
+
+	if (	pass != pass2	) {
+		document.getElementById('message').innerHTML = 'The passwords do not match';
+		return false;
+	}
+
+	document.getElementById('message').innerHTML = '';
+	return true;
+}
+
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+	var y = document.getElementById("hidemenu");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+		y.style.display="inline";
+    } else {
+        x.className = "topnav";
+		y.style.display="none";
+    }
+}
+</script>
